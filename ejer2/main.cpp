@@ -4,73 +4,100 @@
 #include <iostream>
 #include <cmath>
 #include <cctype>
-#include <string>
 
 using namespace std;
 
-struct Gift
-{
-    string genero;
-    int edad;
-    char envoltura;
-};
+double methodOne(double*, double*);
+double readPossitive();
+double methodTwo(double*, double*, double*);
+double toRadian(double);
 
-struct Student
+
+int main()
 {
-    int cedula;
-    string asignatura;
-    int numeroSeccion;
-    Gift regalo;
+	char option;
+	bool optionNoOk;
+	double height;
+
+	// Method One
+	double base, quantity;
+
+	// Method Two
+	double horizontalDistance, eyeHeight, alpha;
+
+
+	do
+	{
+		cout << "A-) Metodo por bloques repetitivos \n";
+		cout << "B-) Metodo por trigonometria\n";
+		cin >> option;
+		option = toupper(option);
+
+		optionNoOk = ((option != 'A') && (option != 'B'));
+		
+		if (optionNoOk)
+			cout << "Opcion invalida\n";	
+		
+	}while( optionNoOk );
+
+	if (option == 'A')
+	{
+		cout << "Ingrese el tamano de la unidad base (bloque/nivel): ";
+		base = readPossitive();
+		cout << "Ingrese la cantidad de (bloque/niveles): ";
+		quantity = readPossitive();
+
+	
+		height = methodOne(&base, &quantity);
+	}
+	else
+	{
+		cout << "Ingrese la distancia horizontal: ";
+		horizontalDistance = readPossitive();
+		cout << "Ingrese la altura de los ojos: ";
+		eyeHeight = readPossitive();
+		cout << "Ingrese el angulo de mirada: ";
+		alpha = readPossitive();
+		
+		height = methodTwo(&horizontalDistance, &eyeHeight, &alpha);
+	}
+	cout << "La altura del edificio es aprox. " << height << endl;
+
+	return 0;
 }
 
-int main(int argc, char const *argv[])
-{   
-    Student Estudiantes[1200];
-    // A
-    int numeroAlumnosRegalo = 0;
-
-    carga(Estudiantes, &numeroAlumnosRegalo);
-    
-    return 0;
-}
-
-void carga(Student Estudiantes[], int *contador )
+double methodOne(double* base, double* quantity)
 {
-
-    do
-    {
-        cout << "Datos del alumno" << endl;
-        cout << "Ingrese el Nombre del Estudiante: ";
-        cin >> Estudiantes[*contador].cedula;
-        cout << "Ingrese la asignatura de interes: ";
-        cin >> Estudiantes[*contador].asignatura;
-        cout << "Ingrese el numero de seccion: ";
-        cin >> Estudiantes[*contador].numeroSeccion;
-        cout << "Caracteristicas del Regalo";
-        cout << "Ingrese el genero del regalo (nina/nino): ";
-        do
-        {
-            cin >> Estudiantes[*contador].regalo.genero;
-
-        } while ();
-        
-        cout << "Edad comprendida: ";
-        cout << "Posee envoltura? (S/N): ";
-
-        *contador += 1;
-    }while();
+	return (*base * *quantity);
 }
 
-
-string toUpper(string str)
+double readPossitive()
 {
-    int tam = str.length();
-    int i = 0;
-    char *cadena = new char[tam + 1];
-    for (; i < tam; i++)
-    {
-        cadena[i] = toupper(cadena[i]);
-    }
-    cadena[i] = '\0';
-    
+	double n;
+	
+	do
+	{
+		cin >> n;
+		if (n < 0)
+		{
+			cout << "Numero negativo invalidos\n";
+			cout << "Intente de nuevo: ";
+		}
+	}while(n < 0);
+
+	return n;
 }
+
+
+double methodTwo(double* hd, double* eh, double* alpha )
+{
+	*alpha = toRadian(*alpha);
+
+	return (tan(*alpha) * *hd) + *eh;
+}
+
+double toRadian(double alpha)
+{
+	return alpha * M_PI / 180;
+}
+

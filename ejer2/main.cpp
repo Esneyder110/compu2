@@ -3,9 +3,12 @@
 // Regalos
 
 #include <iostream>
-#include <cmath>
+#include <iomanip>
 #include <cctype>
 #include <string>
+#include <cmath>
+#include <cstring>
+#include <cstdio>
 
 #define MAX 1200
 
@@ -27,9 +30,13 @@ struct Student
 };
 
 
-void carga(Student*, int*);
+void carga(Student [], int*);
 char sino();
-int porceEnvoltura(Student Estudiantes[], int tam, double *porce);
+int porceEnvoltura(Student [], int tam, double *porce);
+void regalosIntervalos(Student Estudiantes[], int tam);	
+int buscarCedula(Student Estudiantes[], int tam, int id, char *materia); // Busqueda Asquerosa
+
+
 
 int main() // int argc, char const *argv[]
 {   
@@ -37,15 +44,42 @@ int main() // int argc, char const *argv[]
   // A
   int numeroAlumnosRegalo = 0;
   // B
-  int sinenv;
+  int sinenv = 0;
   double porce;
- 
+  // C
+  int cedula;
+  char materiaInteres[200];
+  int seccion;
 
 
+  // A
   carga(Estudiantes, &numeroAlumnosRegalo);
+  
+  // B
   sinenv = porceEnvoltura(Estudiantes, numeroAlumnosRegalo, &porce);
-  cout << "El porcentaje de regalos para nina es: " << porce << "\%" << endl;
+  cout << "\n\nEl porcentaje de regalos para nina es: " << porce << "\%" << endl;
   cout << "La cantidad de regalos sin envoltura es: " << sinenv << endl;
+
+  // C
+  regalosIntervalos(Estudiantes, numeroAlumnosRegalo);
+
+	// D
+
+	cout << "\n\n" << setw(40) << "BUSQUEDA" << "\n\n"
+	<< "Ingrese el numero de cedula a consultar: ";
+	cin >> cedula;
+	// printf( "%s %d",
+	// 	( (seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, materiaInteres)) ==  -1) ?
+	// 		"No se ha encontrado la cedula registra: ": 
+	// 		"La seccion es: ", seccion);
+	
+	seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, materiaInteres);
+
+
+	if (seccion != -1)
+		printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres, seccion);
+	else
+		printf("No se encontro\n");
 
 
   return 0;
@@ -105,7 +139,7 @@ char sino()
 
 int porceEnvoltura(Student Estudiantes[], int tam, double *porce)
 {
-	int sinenv, ninas;
+	int sinenv = 0, ninas;
 
 	for (int i = 0; i < tam; ++i)
 	{
@@ -128,9 +162,76 @@ int porceEnvoltura(Student Estudiantes[], int tam, double *porce)
 	return sinenv;
 }
 
+void regalosIntervalos(Student Estudiantes[], int tam)
+{
+	int trescinco, seisnueve, nuevemayor;
+	int edad;
+	int intervalosEdad[3] = {0};
+	int espaciadoP = 40, espaciadoS = 13;
+	int total = 0;
+	int a;
+	string nombreIntervalo[3] = {"3 a 5", "6 a 9", "9 en adelante" };
+	
+	trescinco = seisnueve = nuevemayor = 0;
 
 
+	for (int i = 0; i < tam; ++i)
+	{
+		if (Estudiantes[i].regalo.genero == "nino")
+		{
+			edad = Estudiantes[i].regalo.edad;
+			if ((edad >=3) && (edad <= 5))
+			{
+				intervalosEdad[0] += 1; // [tres - cinco]
+			}
+			else if ((edad >= 6) && (edad <= 9))
+			{
+				intervalosEdad[1] += 1; // [seis - nueve]
+			}else if (edad > 9)
+			{
+				intervalosEdad[2] += 1; // (nueve - mayor)
+			}
+		}
+	}
 
+	a = strlen("GENERO: NINOS");
+
+	cout << "\n\n" <<  setw(((espaciadoP + espaciadoS )/ 2) + a / 2) << "GENERO: NINOS" << endl;
+	cout << setw(espaciadoS) << "EDADES" << setw(espaciadoP) << "CANTIDAD REGALOS" << endl;
+
+	for (int i = 0; i < 3; ++i)
+	{
+		cout << setw(espaciadoS) << nombreIntervalo[i] << setw(espaciadoP) << intervalosEdad[i] << endl;		
+	}
+
+	// cout << setw(espaciadoS) <<  << setw(espaciadoP) << trescinco << endl;
+	// cout << setw(espaciadoS) << "6 a 9" << setw(espaciadoP) << seisnueve << endl;
+	// cout << setw(espaciadoS) << "9 en adelante" << setw(espaciadoP) << nuevemayor << endl;
+
+	cout << setfill('_') << setw(espaciadoP + espaciadoS)  << '_' << endl;
+	cout << setfill(' ') << setw(espaciadoP + espaciadoS) << "TOTAL = " << total << endl;
+}
+
+int buscarCedula(Student Estudiantes[], int tam, int id, char *materia)
+{
+	int l;
+
+	for (int i = 0; i < tam; ++i)
+	{
+		if (Estudiantes[i].cedula == id)
+		{
+			// cout << materia << *materia << Estudiantes[i].asignatura << endl;
+			l = Estudiantes[i].asignatura.length;
+			char * aux = new char[l + 1];
+			strcpy(aux, Estudiantes[i].asignatura.c_str());
+			aux[ l + 1] = '\0';
+			strcpy(materia, aux);
+			return Estudiantes[i].numeroSeccion;
+		}
+	}
+	return -1;
+
+}
 
 
 

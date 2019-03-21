@@ -34,7 +34,7 @@ void carga(Student [], int*);
 char sino();
 int porceEnvoltura(Student [], int tam, double *porce);
 void regalosIntervalos(Student Estudiantes[], int tam);	
-int buscarCedula(Student Estudiantes[], int tam, int id, char *materia); // Busqueda Asquerosa
+int buscarCedula(Student Estudiantes[], int tam, int id, string *materia); 
 
 
 
@@ -48,7 +48,7 @@ int main() // int argc, char const *argv[]
   double porce;
   // C
   int cedula;
-  char materiaInteres[200];
+  string materiaInteres;
   int seccion;
 
 
@@ -73,11 +73,11 @@ int main() // int argc, char const *argv[]
 	// 		"No se ha encontrado la cedula registra: ": 
 	// 		"La seccion es: ", seccion);
 	
-	seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, materiaInteres);
+	seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, &materiaInteres);
 
 
 	if (seccion != -1)
-		printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres, seccion);
+		printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres.c_str(), seccion);
 	else
 		printf("No se encontro\n");
 
@@ -139,7 +139,7 @@ char sino()
 
 int porceEnvoltura(Student Estudiantes[], int tam, double *porce)
 {
-	int sinenv = 0, ninas;
+	int sinenv = 0, ninas = 0;
 
 	for (int i = 0; i < tam; ++i)
 	{
@@ -177,7 +177,7 @@ void regalosIntervalos(Student Estudiantes[], int tam)
 
 	for (int i = 0; i < tam; ++i)
 	{
-		if (Estudiantes[i].regalo.genero == "nino")
+		if (!strcmp(Estudiantes[i].regalo.genero.c_str(), "nino"))
 		{
 			edad = Estudiantes[i].regalo.edad;
 			if ((edad >=3) && (edad <= 5))
@@ -201,7 +201,8 @@ void regalosIntervalos(Student Estudiantes[], int tam)
 
 	for (int i = 0; i < 3; ++i)
 	{
-		cout << setw(espaciadoS) << nombreIntervalo[i] << setw(espaciadoP) << intervalosEdad[i] << endl;		
+		cout << setw(espaciadoS) << nombreIntervalo[i] << setw(espaciadoP) << intervalosEdad[i] << endl;
+		total += intervalosEdad[i];
 	}
 
 	// cout << setw(espaciadoS) <<  << setw(espaciadoP) << trescinco << endl;
@@ -212,25 +213,17 @@ void regalosIntervalos(Student Estudiantes[], int tam)
 	cout << setfill(' ') << setw(espaciadoP + espaciadoS) << "TOTAL = " << total << endl;
 }
 
-int buscarCedula(Student Estudiantes[], int tam, int id, char *materia)
+int buscarCedula(Student Estudiantes[], int tam, int id, string *materia)
 {
-	int l;
-
 	for (int i = 0; i < tam; ++i)
 	{
 		if (Estudiantes[i].cedula == id)
 		{
-			// cout << materia << *materia << Estudiantes[i].asignatura << endl;
-			l = Estudiantes[i].asignatura.length;
-			char * aux = new char[l + 1];
-			strcpy(aux, Estudiantes[i].asignatura.c_str());
-			aux[ l + 1] = '\0';
-			strcpy(materia, aux);
+			*materia = (Estudiantes[i].asignatura);
 			return Estudiantes[i].numeroSeccion;
 		}
 	}
 	return -1;
-
 }
 
 

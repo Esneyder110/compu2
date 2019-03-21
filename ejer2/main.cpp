@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <cctype>
 #include <string>
 #include <cmath>
 #include <cstring>
@@ -35,7 +34,7 @@ char sino();
 int porceEnvoltura(Student [], int tam, double *porce);
 void regalosIntervalos(Student Estudiantes[], int tam);	
 int buscarCedula(Student Estudiantes[], int tam, int id, string *materia); 
-
+string formato(string materia, int seccion);
 
 
 int main() // int argc, char const *argv[]
@@ -68,22 +67,32 @@ int main() // int argc, char const *argv[]
 	cout << "\n\n" << setw(40) << "BUSQUEDA" << "\n\n"
 	<< "Ingrese el numero de cedula a consultar: ";
 	cin >> cedula;
-	// printf( "%s %d",
-	// 	( (seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, materiaInteres)) ==  -1) ?
-	// 		"No se ha encontrado la cedula registra: ": 
-	// 		"La seccion es: ", seccion);
 	
-	seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, &materiaInteres);
+	printf( "%s\n",
+		((seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, &materiaInteres)) ==  -1) ?
+			"No se ha encontrado la cedula registra": 
+			formato(materiaInteres, seccion).c_str()
+	
+	);
+	
+	// seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, &materiaInteres);
+	
+	// if (seccion != -1)
+	// 	printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres.c_str(), seccion);
+		
 
-
-	if (seccion != -1)
-		printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres.c_str(), seccion);
-	else
-		printf("No se encontro\n");
+	// if (seccion != -1)
+	// 	printf("La Materia de interes es : %s en la seccion: %d\n", materiaInteres.c_str(), seccion);
+	// else
+	// 	printf("No se encontro\n");
 
 
   return 0;
 }
+
+
+
+
 
 void carga(Student Estudiantes[], int *contador )
 {
@@ -226,7 +235,19 @@ int buscarCedula(Student Estudiantes[], int tam, int id, string *materia)
 	return -1;
 }
 
+string formato(string materia, int seccion)
+{
+	
+	string cadena = "La Materia de interes es : ";
+	char buffer[10];
+		
+	cadena.append(materia);
+	cadena.append(" en la seccion: ");
+	itoa (seccion,buffer,10);
+	cadena.append(buffer);
 
+	return cadena;
+}
 
 
 //string toUpper(string str)

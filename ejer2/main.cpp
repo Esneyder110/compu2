@@ -35,7 +35,7 @@ int porceEnvoltura(Student [], int tam, double *porce);
 void regalosIntervalos(Student Estudiantes[], int tam);	
 int buscarCedula(Student Estudiantes[], int tam, int id, string *materia); 
 string formato(string materia, int seccion);
-
+void toUpper(string *str);
 
 int main() // int argc, char const *argv[]
 {   
@@ -91,27 +91,42 @@ int main() // int argc, char const *argv[]
 }
 
 
-
-
-
 void carga(Student Estudiantes[], int *contador )
 {
 	char r;
+	bool ok;
   do
   {
 
     cout << "Datos del alumno\n";
     cout << "Ingrese la cedula del Estudiante: ";
+    cin >> ws;
     cin >> Estudiantes[*contador].cedula;
     cout << "Ingrese la asignatura de interes: ";
-    cin >> Estudiantes[*contador].asignatura;
+    cin >> ws;
+    getline(cin, Estudiantes[*contador].asignatura);
+    toUpper(&Estudiantes[*contador].asignatura);
     cout << "Ingrese el numero de seccion: ";
     cin >> Estudiantes[*contador].numeroSeccion;
     cout << "Caracteristicas del Regalo\n";
-    cout << "Ingrese el genero del regalo (nina/nino): ";
-    cin >> Estudiantes[*contador].regalo.genero;       
-    cout << "Edad comprendida: ";
-    cin >> Estudiantes[*contador].regalo.edad;
+    do
+    {
+	    cout << "Ingrese el genero del regalo (nina/nino): ";
+	    cin >> ws;
+	    getline(cin, Estudiantes[*contador].regalo.genero);
+	    toUpper(&Estudiantes[*contador].regalo.genero);
+			ok = (Estudiantes[*contador].regalo.genero == "NINA")||(Estudiantes[*contador].regalo.genero == "NINO");
+    	if (!ok)
+    	{
+    		cout << "Valor invalido intentelo otra vez" << endl;
+    	}
+    }while(!ok);
+
+
+  	cout << "Edad comprendida: ";
+  	cin >> Estudiantes[*contador].regalo.edad;
+  	Estudiantes[*contador].regalo.edad = fabs(Estudiantes[*contador].regalo.edad);
+   
     cout << "Posee envoltura? (S/N)";
 		Estudiantes[*contador].regalo.envoltura = sino();
 
@@ -152,7 +167,7 @@ int porceEnvoltura(Student Estudiantes[], int tam, double *porce)
 
 	for (int i = 0; i < tam; ++i)
 	{
-		if(Estudiantes[i].regalo.genero == "nina")
+		if(Estudiantes[i].regalo.genero == "NINA")
 		{
 			ninas++;
 		}
@@ -186,7 +201,7 @@ void regalosIntervalos(Student Estudiantes[], int tam)
 
 	for (int i = 0; i < tam; ++i)
 	{
-		if (!strcmp(Estudiantes[i].regalo.genero.c_str(), "nino"))
+		if (!strcmp(Estudiantes[i].regalo.genero.c_str(), "NINO"))
 		{
 			edad = Estudiantes[i].regalo.edad;
 			if ((edad >=3) && (edad <= 5))
@@ -250,15 +265,15 @@ string formato(string materia, int seccion)
 }
 
 
-//string toUpper(string str)
-//{
-//    int tam = str.length();
-//    int i = 0;
-//    char *cadena = new char[tam + 1];
-//    for (; i < tam; i++)
-//    {
-//        cadena[i] = toupper(cadena[i]);
-//    }
-//    cadena[i] = '\0';
-//    
-//}
+void toUpper(string *str)
+{
+   int tam = str->length();
+   int i = 0;
+   char *cadena = new char[tam + 1];
+   strcpy(cadena, str->c_str());
+   for (; i < tam; i++)
+   {
+       cadena[i] = toupper(cadena[i]);
+   }
+   *str = cadena;
+}

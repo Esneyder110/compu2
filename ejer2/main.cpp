@@ -254,12 +254,10 @@ string formato(string materia, int seccion)
 {
 	
 	string cadena = "La Materia de interes es : ";
-	char buffer[10];
 		
 	cadena.append(materia);
 	cadena.append(" en la seccion: ");
-	itoa (seccion,buffer,10);
-	cadena.append(buffer);
+	cadena.append(to_string(seccion));
 
 	return cadena;
 }

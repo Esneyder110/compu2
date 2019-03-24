@@ -9,7 +9,7 @@
 #include <cstring>
 #include <cstdio>
 
-#define MAX 1200
+#define MAX 3000
 
 using namespace std;
 

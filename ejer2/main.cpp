@@ -67,8 +67,8 @@ int main()
 	// D
 
 	cout << "\n\n" << setw(40) << "BUSQUEDA" << "\n\n"
-	<< "Ingrese el numero de cedula a consultar: ";
-	cin >> cedula;
+	<< "Ingrese el numero de cedula a consultar";
+	cedula = readPossitive();
 	
 	printf( "%s\n",
 		((seccion = buscarCedula(Estudiantes, numeroAlumnosRegalo, cedula, &materiaInteres)) ==  -1) ?
@@ -193,7 +193,7 @@ int porceEnvoltura(Student Estudiantes[], int tam, double *porce)
 
 void regalosIntervalos(Student Estudiantes[], int tam)
 {
-	int trescinco, seisnueve, nuevemayor;
+	
 	int edad;
 	int intervalosEdad[3] = {0};
 	int espaciadoP = 40, espaciadoS = 13;
@@ -201,12 +201,12 @@ void regalosIntervalos(Student Estudiantes[], int tam)
 	int a;
 	string nombreIntervalo[3] = {"3 a 5", "6 a 9", "9 en adelante" };
 	
-	trescinco = seisnueve = nuevemayor = 0;
+
 
 
 	for (int i = 0; i < tam; ++i)
 	{
-		if (!strcmp(Estudiantes[i].regalo.genero.c_str(), "NINO"))
+		if (Estudiantes[i].regalo.genero == "NINO")
 		{
 			edad = Estudiantes[i].regalo.edad;
 			if ((edad >=3) && (edad <= 5))
@@ -271,10 +271,10 @@ string formato(string materia, int seccion)
 void toUpper(string *str)
 {
    int tam = str->length();
-   int i = 0;
+   // int i = 0;
    char *cadena = new char[tam + 1];
    strcpy(cadena, str->c_str());
-   for (; i < tam; i++)
+   for (int i = 0; i < tam; i++)
    {
        cadena[i] = toupper(cadena[i]);
    }

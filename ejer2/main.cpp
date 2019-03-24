@@ -36,8 +36,10 @@ void regalosIntervalos(Student Estudiantes[], int tam);
 int buscarCedula(Student Estudiantes[], int tam, int id, string *materia); 
 string formato(string materia, int seccion);
 void toUpper(string *str);
+int readPossitive();
 
-int main() // int argc, char const *argv[]
+
+int main()
 {   
   Student Estudiantes[MAX];
   // A
@@ -98,17 +100,20 @@ void carga(Student Estudiantes[], int *contador )
   do
   {
 
-    cout << "Datos del alumno\n";
-    cout << "Ingrese la cedula del Estudiante: ";
-    cin >> ws;
-    cin >> Estudiantes[*contador].cedula;
+    cout << "\n\nDatos del alumno\n";
+    cout << "Ingrese la cedula del Estudiante";
+    // cin >> ws;
+    // cin >> Estudiantes[*contador].cedula;
+    Estudiantes[*contador].cedula = readPossitive();
+
     cout << "Ingrese la asignatura de interes: ";
     cin >> ws;
     getline(cin, Estudiantes[*contador].asignatura);
     toUpper(&Estudiantes[*contador].asignatura);
-    cout << "Ingrese el numero de seccion: ";
-    cin >> Estudiantes[*contador].numeroSeccion;
-    cout << "Caracteristicas del Regalo\n";
+    cout << "Ingrese el numero de seccion";
+    // cin >> Estudiantes[*contador].numeroSeccion;
+    Estudiantes[*contador].numeroSeccion = readPossitive();
+    cout << "\n\nCaracteristicas del Regalo\n";
     do
     {
 	    cout << "Ingrese el genero del regalo (nina/nino): ";
@@ -123,21 +128,21 @@ void carga(Student Estudiantes[], int *contador )
     }while(!ok);
 
 
-  	cout << "Edad comprendida: ";
-  	cin >> Estudiantes[*contador].regalo.edad;
-  	Estudiantes[*contador].regalo.edad = fabs(Estudiantes[*contador].regalo.edad);
-   
-    cout << "Posee envoltura? (S/N)";
+		cout << "Edad comprendida";
+		// cin >> Estudiantes[*contador].regalo.edad;
+		// Estudiantes[*contador].regalo.edad = fabs(Estudiantes[*contador].regalo.edad);
+	 	Estudiantes[*contador].regalo.edad = readPossitive();
+	  cout << "Posee envoltura? (S/N)";
 		Estudiantes[*contador].regalo.envoltura = sino();
 
-    *contador += 1;
+	  *contador += 1;
 		r = 'N';
 
 		if(*contador < MAX)
 		{
 			cout << "Desea procesar otro estudiante (S/N)";
 			r = sino();
-    }
+	  }
 
   }while((r == 'S') && (*contador < MAX));    
 }
@@ -274,4 +279,30 @@ void toUpper(string *str)
        cadena[i] = toupper(cadena[i]);
    }
    *str = cadena;
+}
+
+int readPossitive()
+{
+	string n;
+	int num;
+	bool ok;
+
+	do
+	{
+		cout << ": ";
+		cin >> ws;
+		// cin >> n;
+		getline(cin, n);
+		try
+		{
+			num = stoi(n);
+			ok = true;
+		}catch ( const exception e )
+		{
+			cout << "Error Intentelo de nuevo" << endl;
+			ok = false;
+		}
+	}while(!ok);
+
+	return  fabs(num);
 }

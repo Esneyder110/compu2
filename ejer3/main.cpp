@@ -16,7 +16,7 @@ public:
 private:
 	char nombre[10];
 	char materia[12];
-	int notas[3]; // 0 - 9
+	float notas[3]; // 0 - 9
 	float pro;
 
 };
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 		alumno[i].promedio();
 	}
 
-	cout << setw(12) << "Nombre" << setw(13) << "Materia" << setw(9) << "Promedio" << endl;
+	cout << left << setw(12) << "Nombre" << setw(13) << "Materia" << right << setw(9) << "Promedio" << endl;
 	
 	for (int i = 0; i < tam; ++i)
 	{
@@ -88,5 +88,5 @@ void Estudiante::promedio()
 
 void Estudiante::listar()
 {
-	cout << setw(12) << nombre << setw(13) << materia << setw(9) << setprecision(2) << fixed << pro << endl;
+	cout << setw(12) << left << nombre << setw(13) << materia << right << setw(9) << setprecision(2) << fixed << pro << endl;
 }

@@ -49,7 +49,7 @@ void PARTICIPANTE::semana(int semana)
 	cin >> pSemanaI;
 	pSemanaI = fabs(pSemanaI);	
 	
-	if(semana == 0);
+	if(semana == 0)
 		pesoInicial = pSemanaI;
 
 	cout << "Ingrese la medida de la cintura a principio de la semana: ";
@@ -134,7 +134,7 @@ int main()
 	{
 		cout << "\n\nSEMANA" << sem << '\n' << endl;
 		for(int i = 0; i < N; i++)
-			participante[i].semana(i);
+			participante[i].semana(sem);
 	
 		cout << setw(n) << left << "Nombre" << setw(n) << right << "Peso" << setw(n) << "IMC" << setw(n) << "Categoria" << endl;
 		
@@ -182,7 +182,7 @@ int main()
 	
 	for( int i = 1; i < N; i++)
 	{	
-		auxPP = participante[i].obtenerPI()- participante[i].obtenerPSF();
+		auxPP = participante[i].obtenerPI() - participante[i].obtenerPSF();
 		
 		if (mayorPP < auxPP)
 		{
@@ -192,7 +192,9 @@ int main()
 	}
 
 
-	cout << "El ganador del concurso " << ((mayorPP >= 0)? "con una mayor perdida de peso es: ":"con un menor incremento de peso es: ") << ganador << endl;
+//	cout << "El ganador del concurso " << ((mayorPP >= 0)? "con una mayor perdida de peso es: ":"con un menor incremento de peso es: ") << ganador << endl;
+
+	cout << "Ganador del concuroso: " << ganador << endl;
 
 	return 0;
 }

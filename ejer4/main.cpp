@@ -65,9 +65,8 @@ void PARTICIPANTE::semana(int semana)
 	cout << "\n\n" << endl;
 }
 
-void PARTICIPANTE::resumen(int semana)
+void PARTICIPANTE::resumen(int n)
 {	
-	int n = 16;
 	cout << setw(n) << left << nombre << setw(n) << right << pSemanaI << setw(n) << imc 
 	<< setw(n) << this->cat() << endl;
 }
@@ -121,7 +120,7 @@ double PARTICIPANTE::obtenerPI()
 
 int main()
 {
-	int N = 2, n = 16, sem = 1;
+	int N = 2, n = 16, sem = 0;
 	PARTICIPANTE participante[N];
 	string ganadorP, ganadorC, ganador;
 	double pesoMayor, pesoAux, cinturaMayor, cinturaAux, mayorPP, auxPP;
@@ -132,14 +131,14 @@ int main()
 
 	do
 	{
-		cout << "\n\nSEMANA" << sem << '\n' << endl;
+		cout << "\n\nSEMANA " << sem + 1 << '\n' << endl;
 		for(int i = 0; i < N; i++)
 			participante[i].semana(sem);
 	
 		cout << setw(n) << left << "Nombre" << setw(n) << right << "Peso" << setw(n) << "IMC" << setw(n) << "Categoria" << endl;
 		
 		for(int i = 0; i < N; i++)
-			participante[i].resumen(i);
+			participante[i].resumen(n);
 
 		ganadorP = participante[0].obtenerNombre();
 		pesoMayor = participante[0].obtenerPSI() - participante[0].obtenerPSF();
@@ -170,7 +169,7 @@ int main()
 		cout << ((cinturaMayor >= 0)? "Mayor perdida de cintura: ": "Menor incremento de cintura: ")
 				 << fabs(cinturaMayor) << " cm " << ganadorC << endl;
 
-		cout << "¿Registrar pesos de una nueva semana? [S/N]: ";
+		cout << "Registrar pesos de una nueva semana? [S/N]: ";
 		cin >> ws;
 		cin >> r;
 		r = toupper(r);
@@ -194,7 +193,7 @@ int main()
 
 //	cout << "El ganador del concurso " << ((mayorPP >= 0)? "con una mayor perdida de peso es: ":"con un menor incremento de peso es: ") << ganador << endl;
 
-	cout << "Ganador del concuroso: " << ganador << endl;
+	cout << "Ganador del concurso: " << ganador << endl;
 
 	return 0;
 }

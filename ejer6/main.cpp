@@ -1,3 +1,9 @@
+// Integrantes
+// Emmy Perez
+// Esneyder Monsalve
+// Diego Salazar
+// Seccion 2
+
 #include <iostream>
 #include <string.h>
 
